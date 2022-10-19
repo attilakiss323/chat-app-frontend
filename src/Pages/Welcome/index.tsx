@@ -4,33 +4,8 @@ import styled from "styled-components";
 import { Typography } from "@mui/material";
 import { colors, distances } from "utils";
 import { useNavigate } from "react-router-dom";
-import { Button } from "Components";
+import { Button, Container } from "Components";
 import { Routes } from "routes";
-
-const Container = styled.div`
-  background-image: url(${welcomeBackground});
-  position: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-`;
-
-const VerticalContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`;
-
-const Box = styled.div`
-  background-color: #fff;
-  padding: ${distances.px.l};
-  border-radius: ${distances.px.m};
-  width: 400px;
-`;
 
 const WelcomeTitle = styled(Typography)`
   color: ${colors.blue500};
@@ -49,21 +24,17 @@ export const Welcome = () => {
 
   return (
     <Container>
-      <VerticalContainer>
-        <Box>
-          <WelcomeTitle variant="h1" textAlign="center">
-            Chat App
-          </WelcomeTitle>
-          <ButtonContainer>
-            <Button onClick={() => navigate(Routes.login)} variant="contained">
-              Login
-            </Button>
-            <Button onClick={() => navigate(Routes.signup)} variant="contained">
-              Sign up
-            </Button>
-          </ButtonContainer>
-        </Box>
-      </VerticalContainer>
+      <WelcomeTitle variant="h1" textAlign="center">
+        Chat App
+      </WelcomeTitle>
+      <ButtonContainer>
+        <Button onClick={() => navigate(Routes.login)} variant="contained">
+          Login
+        </Button>
+        <Button onClick={() => navigate(Routes.signup)} variant="contained">
+          Sign up
+        </Button>
+      </ButtonContainer>
     </Container>
   );
 };

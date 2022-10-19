@@ -6,20 +6,28 @@ import {
 import styled from "styled-components";
 import { distances } from "utils";
 
-const StyledTextField = styled(MuiTextField)`
+const StyledTextField = styled(MuiTextField)<{ isFormInput?: boolean }>`
   && {
-    margin-bottom: ${({ error }) => (error ? "1px" : distances.px.xl)};
+    margin-bottom: ${({ error, isFormInput }) =>
+      error || !isFormInput ? "1px" : distances.px.xl};
   }
 `;
 
 type TextFieldProps = MuiTextFieldProps & {
   errors?: Record<string, string>;
   touched?: Record<string, boolean>;
+  isFormInput?: boolean;
 };
 
-export const TextField = ({ errors, touched, ...rest }: TextFieldProps) => {
+export const TextField = ({
+  isFormInput,
+  errors,
+  touched,
+  ...rest
+}: TextFieldProps) => {
   return (
     <StyledTextField
+      isFormInput={isFormInput}
       error={!!(errors?.[rest.name!] && touched?.[rest.name!])}
       helperText={
         !!(errors?.[rest.name!] && touched?.[rest.name!])

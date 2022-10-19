@@ -9,6 +9,9 @@ export const colors = {
   blue800: "#016278",
   blue900: "#015467",
   blue1000: "#014656",
+
+  white: "#fff",
+  black: "#000",
 };
 
 export const distances = {
