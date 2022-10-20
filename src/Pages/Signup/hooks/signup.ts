@@ -1,4 +1,6 @@
 import { post } from "utils";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 type SignupData = {
   firstName: string;
@@ -8,7 +10,11 @@ type SignupData = {
   confirmPassword: string;
 };
 
-export const userSignup = () => {
+export const useUserSignup = () => {
+  const [status, setStatus] = useState<number | undefined>(undefined);
+  const [data, setData] = useState();
+  const navigate = useNavigate();
+
   const handleSignup = (data: SignupData) => {
     console.log("data", data);
 
@@ -18,10 +24,18 @@ export const userSignup = () => {
       password: data.password,
     };
 
-    post("/signup", body).then((data) => {
-      console.log("data", data); // JSON data parsed by `data.json()` call
-    });
+    post("/signup", body)
+      .then((response) => {
+        setStatus(response.status);
+
+        return response.json();
+      })
+      .then((response) => {
+        setData(response);
+      });
   };
+
+  console.log(status, data);
 
   return {
     handleSignup,

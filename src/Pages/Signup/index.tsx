@@ -7,7 +7,7 @@ import { object, string, ref } from "yup";
 import { Button, TextField, Container } from "Components";
 import { useNavigate } from "react-router-dom";
 import { Routes } from "routes";
-import { userSignup } from "./hooks";
+import { useUserSignup } from "./hooks";
 
 const Form = styled.form`
   display: flex;
@@ -42,7 +42,7 @@ const signupSchema = object({
 
 export const Signup = () => {
   const navigate = useNavigate();
-  const { handleSignup } = userSignup();
+  const { handleSignup } = useUserSignup();
 
   return (
     <Container>
@@ -54,7 +54,10 @@ export const Signup = () => {
           password: "",
           confirmPassword: "",
         }}
-        onSubmit={handleSignup}
+        onSubmit={(values, { resetForm }) => {
+          handleSignup(values);
+          resetForm();
+        }}
         validationSchema={signupSchema}
       >
         {({
