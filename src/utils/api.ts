@@ -14,3 +14,8 @@ export async function post(url = "", data = {}) {
 
   return response;
 }
+
+export enum api {
+  signup = "/signup",
+  login = "/login",
+}

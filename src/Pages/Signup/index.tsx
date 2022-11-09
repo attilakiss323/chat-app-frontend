@@ -7,7 +7,8 @@ import { object, string, ref } from "yup";
 import { Button, TextField, Container } from "Components";
 import { useNavigate } from "react-router-dom";
 import { Routes } from "routes";
-import { useUserSignup } from "./hooks";
+import { useUserSignup } from "./hooks/signup";
+import { useSelector } from "react-redux";
 
 const Form = styled.form`
   display: flex;
@@ -43,6 +44,9 @@ const signupSchema = object({
 export const Signup = () => {
   const navigate = useNavigate();
   const { handleSignup } = useUserSignup();
+  const x = useSelector((state) => (state as unknown as any).error);
+
+  console.log("xxxxx", x);
 
   return (
     <Container>
@@ -54,9 +58,10 @@ export const Signup = () => {
           password: "",
           confirmPassword: "",
         }}
-        onSubmit={(values, { resetForm }) => {
+        onSubmit={(values, { resetForm, setSubmitting }) => {
           handleSignup(values);
           resetForm();
+          setSubmitting(false);
         }}
         validationSchema={signupSchema}
       >

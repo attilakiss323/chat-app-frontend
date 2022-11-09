@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Typography } from "@mui/material";
 import { colors, distances } from "utils";
-import { TextField, Container } from "Components";
+import { TextField, Container, MenuAppBar } from "Components";
 import { useNavigate } from "react-router-dom";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import List from "@mui/material/List";
@@ -61,30 +61,30 @@ export const Home = () => {
   const navigate = useNavigate();
 
   return (
-    <Container width={1000}>
-      <WelcomeTitle variant="h5" textAlign="center">
-        Chat App
-      </WelcomeTitle>
-      <Wrapper>
-        <UserWrapper>
-          <TextField fullWidth />
-          <SearchButton>
-            <SearchIcon />
-          </SearchButton>
-          <UserList>
-            <UserListItem name="Johan Doe" />
-            <UserListItem name="Richard Roe" />
-          </UserList>
-        </UserWrapper>
-        <ChatWrapper>
-          <Chat
-            aria-label="minimum height"
-            minRows={21}
-            placeholder="Chat..."
-          />
-          <TextField fullWidth />
-        </ChatWrapper>
-      </Wrapper>
-    </Container>
+    <>
+      <MenuAppBar />
+      <Container width={1000}>
+        <Wrapper>
+          <UserWrapper>
+            <TextField fullWidth />
+            <SearchButton>
+              <SearchIcon />
+            </SearchButton>
+            <UserList>
+              <UserListItem name="Johan Doe" />
+              <UserListItem name="Richard Roe" />
+            </UserList>
+          </UserWrapper>
+          <ChatWrapper>
+            <Chat
+              aria-label="minimum height"
+              minRows={21}
+              placeholder="Chat..."
+            />
+            <TextField fullWidth />
+          </ChatWrapper>
+        </Wrapper>
+      </Container>
+    </>
   );
 };

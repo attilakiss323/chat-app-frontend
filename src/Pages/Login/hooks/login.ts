@@ -4,26 +4,22 @@ import { Routes } from "routes";
 import { useDispatch } from "react-redux";
 import { setUser, setError } from "reduxToolkit";
 
-type SignupData = {
-  firstName: string;
-  lastName: string;
+type LoginData = {
   email: string;
   password: string;
-  confirmPassword: string;
 };
 
-export const useUserSignup = () => {
+export const useUserLogin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleSignup = async (data: SignupData) => {
+  const handleLogin = async (data: LoginData) => {
     const body = {
-      userName: `${data.firstName} ${data.lastName}`,
       email: data.email,
       password: data.password,
     };
 
-    const response = await post(api.signup, body);
+    const response = await post(api.login, body);
 
     const user = await response.json();
 
@@ -37,6 +33,6 @@ export const useUserSignup = () => {
   };
 
   return {
-    handleSignup,
+    handleLogin,
   };
 };

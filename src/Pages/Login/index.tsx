@@ -7,6 +7,8 @@ import { object, string } from "yup";
 import { Button, TextField, Container } from "Components";
 import { useNavigate } from "react-router-dom";
 import { Routes } from "routes";
+import { useUserLogin } from "./hooks/login";
+import { useSelector } from "react-redux";
 
 const Form = styled.form`
   display: flex;
@@ -23,6 +25,7 @@ const Buttons = styled.div`
   display: flex;
   justify-content: space-evenly;
 `;
+
 const loginSchema = object({
   password: string().required(),
   email: string().email().required(),
@@ -30,16 +33,19 @@ const loginSchema = object({
 
 export const Login = () => {
   const navigate = useNavigate();
+  const { handleLogin } = useUserLogin();
+  const x = useSelector((state) => (state as unknown as any).error);
+
+  console.log("xxxxx", x);
 
   return (
     <Container>
       <Formik
         initialValues={{ email: "", password: "" }}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
+        onSubmit={(values, { resetForm, setSubmitting }) => {
+          handleLogin(values);
+          resetForm();
+          setSubmitting(false);
         }}
         validationSchema={loginSchema}
       >

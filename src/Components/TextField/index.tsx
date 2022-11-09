@@ -6,7 +6,9 @@ import {
 import styled from "styled-components";
 import { distances } from "utils";
 
-const StyledTextField = styled(MuiTextField)<{ isFormInput?: boolean }>`
+const StyledTextField = styled(({ isFormInput, ...props }) => (
+  <MuiTextField {...props} />
+))<{ isFormInput?: boolean }>`
   && {
     margin-bottom: ${({ error, isFormInput }) =>
       error || !isFormInput ? "1px" : distances.px.xl};
