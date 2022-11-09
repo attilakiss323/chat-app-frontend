@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { Routes } from "routes";
 import { useUserLogin } from "./hooks/login";
 import { useSelector } from "react-redux";
+import Alert from "@mui/material/Alert";
 
 const Form = styled.form`
   display: flex;
@@ -34,12 +35,11 @@ const loginSchema = object({
 export const Login = () => {
   const navigate = useNavigate();
   const { handleLogin } = useUserLogin();
-  const x = useSelector((state) => (state as unknown as any).error);
-
-  console.log("xxxxx", x);
+  const error = useSelector((state) => (state as unknown as any).error);
 
   return (
     <Container>
+      {error.message && <Alert severity="error">{error.message}</Alert>}
       <Formik
         initialValues={{ email: "", password: "" }}
         onSubmit={(values, { resetForm, setSubmitting }) => {

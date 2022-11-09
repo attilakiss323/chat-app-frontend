@@ -13,8 +13,7 @@ export const errorSlice = createSlice({
   initialState,
   reducers: {
     setError: (state, data) => {
-      console.log("data", data);
-      state = data.payload;
+      state.message = data.payload.error;
     },
   },
 });

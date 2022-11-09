@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { Routes } from "routes";
 import { useUserSignup } from "./hooks/signup";
 import { useSelector } from "react-redux";
+import Alert from "@mui/material/Alert";
 
 const Form = styled.form`
   display: flex;
@@ -44,12 +45,11 @@ const signupSchema = object({
 export const Signup = () => {
   const navigate = useNavigate();
   const { handleSignup } = useUserSignup();
-  const x = useSelector((state) => (state as unknown as any).error);
-
-  console.log("xxxxx", x);
+  const error = useSelector((state) => (state as unknown as any).error);
 
   return (
     <Container>
+      {error.message && <Alert severity="error">{error.message}</Alert>}
       <Formik
         initialValues={{
           firstName: "",

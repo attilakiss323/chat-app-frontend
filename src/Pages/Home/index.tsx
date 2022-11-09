@@ -10,11 +10,6 @@ import { UserListItem } from "./Components";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 
-const WelcomeTitle = styled(Typography)`
-  color: ${colors.blue500};
-  padding-bottom: ${distances.px.l};
-`;
-
 const Wrapper = styled.div`
   display: flex;
 `;

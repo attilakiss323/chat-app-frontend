@@ -8,19 +8,16 @@ import MenuIcon from "@mui/icons-material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import Button from "@mui/material/Button";
+import { useAppBar } from "./useAppBar";
+import { colors } from "utils";
 
 export const MenuAppBar = () => {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const { handleSignout, handleMenuClick, handleMenuClose, anchorEl } =
+    useAppBar();
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" style={{ background: colors.blue500 }}>
         <Toolbar>
           <div>
             <IconButton
@@ -28,7 +25,7 @@ export const MenuAppBar = () => {
               edge="start"
               color="inherit"
               aria-label="menu"
-              onClick={handleClick}
+              onClick={handleMenuClick}
               sx={{ mr: 2 }}
             >
               <MenuIcon />
@@ -37,20 +34,20 @@ export const MenuAppBar = () => {
               id="long-menu"
               anchorEl={anchorEl}
               open={Boolean(anchorEl)}
-              onClose={handleClose}
+              onClose={handleMenuClose}
               PaperProps={{
                 style: {
                   width: "20ch",
                 },
               }}
             >
-              <MenuItem onClick={handleClose}>Profile</MenuItem>
+              <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
             </Menu>
           </div>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Chat App
           </Typography>
-          <Button color="inherit" onClick={() => console.log("sign out")}>
+          <Button color="inherit" onClick={handleSignout}>
             Sign out
           </Button>
         </Toolbar>

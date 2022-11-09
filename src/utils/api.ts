@@ -18,4 +18,6 @@ export async function post(url = "", data = {}) {
 export enum api {
   signup = "/signup",
   login = "/login",
+  signout = "/signout",
+  user = "/user",
 }

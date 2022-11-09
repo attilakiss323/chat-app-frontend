@@ -29,7 +29,8 @@ export const useUserLogin = () => {
     }
 
     dispatch(setUser(user));
-    navigate(Routes.home);
+    localStorage.setItem("isLoggedIn", "true");
+    navigate(Routes.home, { state: { prevPath: "/login" } });
   };
 
   return {

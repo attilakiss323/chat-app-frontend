@@ -4,6 +4,8 @@ import {
   Route,
 } from "react-router-dom";
 import { Welcome, Login, Signup, Home } from "Pages";
+import { RequireAuth } from "./RequireAuth";
+import { Public } from "./Public";
 
 export enum Routes {
   welcome = "/",
@@ -15,10 +17,38 @@ export enum Routes {
 export const Router = () => (
   <BrowserRouter>
     <ReactRouterRoutes>
-      <Route path={Routes.welcome} element={<Welcome />} />
-      <Route path={Routes.login} element={<Login />} />
-      <Route path={Routes.signup} element={<Signup />} />
-      <Route path={Routes.home} element={<Home />} />
+      <Route
+        path={Routes.welcome}
+        element={
+          <Public>
+            <Welcome />
+          </Public>
+        }
+      />
+      <Route
+        path={Routes.login}
+        element={
+          <Public>
+            <Login />
+          </Public>
+        }
+      />
+      <Route
+        path={Routes.signup}
+        element={
+          <Public>
+            <Signup />
+          </Public>
+        }
+      />
+      <Route
+        path={Routes.home}
+        element={
+          <RequireAuth>
+            <Home />
+          </RequireAuth>
+        }
+      />
     </ReactRouterRoutes>
   </BrowserRouter>
 );
