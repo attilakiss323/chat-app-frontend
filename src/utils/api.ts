@@ -20,4 +20,5 @@ export enum api {
   login = "/login",
   signout = "/signout",
   user = "/user",
+  users = "/users",
 }

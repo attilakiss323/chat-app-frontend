@@ -1,14 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { Typography } from "@mui/material";
 import { colors, distances } from "utils";
 import { TextField, Container, MenuAppBar } from "Components";
-import { useNavigate } from "react-router-dom";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import List from "@mui/material/List";
 import { UserListItem } from "./Components";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
+import { useGetUsers } from "./hooks/useGetUsers";
 
 const Wrapper = styled.div`
   display: flex;
@@ -53,7 +52,7 @@ const SearchButton = styled(IconButton)`
 `;
 
 export const Home = () => {
-  const navigate = useNavigate();
+  useGetUsers();
 
   return (
     <>
