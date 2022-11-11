@@ -18,7 +18,8 @@ export const useUserSignup = () => {
 
   const handleSignup = async (data: SignupData) => {
     const body = {
-      userName: `${data.firstName} ${data.lastName}`,
+      firstName: data.firstName,
+      lastName: data.lastName,
       email: data.email,
       password: data.password,
     };
