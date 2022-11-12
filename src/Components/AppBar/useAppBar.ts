@@ -3,7 +3,7 @@ import { post, api } from "utils";
 import { useNavigate } from "react-router-dom";
 import { Routes } from "routes";
 import { useDispatch } from "react-redux";
-import { clearUser, setError } from "reduxToolkit";
+import { clearUsers, setError } from "reduxToolkit";
 
 export const useAppBar = () => {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ export const useAppBar = () => {
       return;
     }
 
-    dispatch(clearUser());
+    dispatch(clearUsers());
     localStorage.setItem("isLoggedIn", "false");
     navigate(Routes.welcome);
   };

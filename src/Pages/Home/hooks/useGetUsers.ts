@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { api } from "utils";
 import { useDispatch } from "react-redux";
-import { setError } from "reduxToolkit";
+import { setError, setUsers } from "reduxToolkit";
 
 export const useGetUsers = () => {
   const dispatch = useDispatch();
@@ -10,13 +10,12 @@ export const useGetUsers = () => {
 
     const users = await response.json();
 
-    console.log("users", users);
     if (response.status !== 200 && response.status !== 201) {
       dispatch(setError(users));
       return;
     }
 
-    // dispatch(setUser(user));
+    dispatch(setUsers(users));
   };
 
   useEffect(() => {

@@ -8,6 +8,8 @@ import { UserListItem } from "./Components";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import { useGetUsers } from "./hooks/useGetUsers";
+import { useSelector } from "react-redux";
+import { AppStateType } from "reduxToolkit";
 
 const Wrapper = styled.div`
   display: flex;
@@ -53,6 +55,7 @@ const SearchButton = styled(IconButton)`
 
 export const Home = () => {
   useGetUsers();
+  const users = useSelector((state) => (state as AppStateType).user.users);
 
   return (
     <>
@@ -65,8 +68,9 @@ export const Home = () => {
               <SearchIcon />
             </SearchButton>
             <UserList>
-              <UserListItem name="Johan Doe" />
-              <UserListItem name="Richard Roe" />
+              {users.map((user) => (
+                <UserListItem name={`${user.firstName} ${user.lastName}`} />
+              ))}
             </UserList>
           </UserWrapper>
           <ChatWrapper>

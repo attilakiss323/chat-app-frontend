@@ -2,7 +2,7 @@ import { post, api } from "utils";
 import { useNavigate } from "react-router-dom";
 import { Routes } from "routes";
 import { useDispatch } from "react-redux";
-import { setUser, setError } from "reduxToolkit";
+import { setCurrentUser, setError } from "reduxToolkit";
 
 type LoginData = {
   email: string;
@@ -28,7 +28,7 @@ export const useUserLogin = () => {
       return;
     }
 
-    dispatch(setUser(user));
+    dispatch(setCurrentUser(user));
     localStorage.setItem("isLoggedIn", "true");
     navigate(Routes.home, { state: { prevPath: "/login" } });
   };

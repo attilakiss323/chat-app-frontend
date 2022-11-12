@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export interface ErrorSate {
+export interface ErrorType {
   message?: string;
 }
 
-const initialState: ErrorSate = {
+const initialState: ErrorType = {
   message: undefined,
 };
 
