@@ -21,7 +21,7 @@ export const useUserLogin = () => {
 
     const response = await post(api.login, body);
 
-    const user = await response.json();
+    const { user, token } = await response.json();
 
     if (response.status !== 200 && response.status !== 201) {
       dispatch(setError(user));
@@ -29,7 +29,7 @@ export const useUserLogin = () => {
     }
 
     dispatch(setCurrentUser(user));
-    localStorage.setItem("isLoggedIn", "true");
+    localStorage.setItem("token", token);
     navigate(Routes.home, { state: { prevPath: "/login" } });
   };
 

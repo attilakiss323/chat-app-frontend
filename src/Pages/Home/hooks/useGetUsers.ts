@@ -1,12 +1,16 @@
 import { useEffect } from "react";
-import { api } from "utils";
+import { api, get } from "utils";
 import { useDispatch } from "react-redux";
 import { setError, setUsers } from "reduxToolkit";
+import { useSelector } from "react-redux";
+import { AppStateType } from "reduxToolkit";
 
 export const useGetUsers = () => {
+  const users = useSelector((state) => (state as AppStateType).user.users);
   const dispatch = useDispatch();
+
   const handleGetUsers = async () => {
-    const response = await fetch(api.users);
+    const response = await get(api.users);
 
     const users = await response.json();
 
@@ -24,5 +28,6 @@ export const useGetUsers = () => {
 
   return {
     handleGetUsers,
+    users,
   };
 };

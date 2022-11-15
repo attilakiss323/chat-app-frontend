@@ -28,7 +28,8 @@ export const userSlice = createSlice({
       state.currentUser = data.payload;
     },
     setUsers: (state, data) => {
-      state.users = data.payload;
+      state.users = data.payload.users;
+      state.currentUser = data.payload.currentUser;
     },
     clearUsers: (state) => {
       state.currentUser = {

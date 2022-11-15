@@ -28,7 +28,7 @@ export const useAppBar = () => {
     }
 
     dispatch(clearUsers());
-    localStorage.setItem("isLoggedIn", "false");
+    localStorage.setItem("token", "");
     navigate(Routes.welcome);
   };
 
