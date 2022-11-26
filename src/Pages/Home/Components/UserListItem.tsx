@@ -5,9 +5,14 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import PersonIcon from "@mui/icons-material/Person";
 
-export const UserListItem = ({ name }: { name: string }) => {
+type UserListItemType = {
+  name: string;
+  handleSelectUser(): void;
+};
+
+export const UserListItem = ({ name, handleSelectUser }: UserListItemType) => {
   return (
-    <ListItem>
+    <ListItem onClick={handleSelectUser}>
       <ListItemAvatar>
         <Avatar>
           <PersonIcon />

@@ -2,12 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import { colors, distances } from "utils";
 import { TextField, Container, MenuAppBar } from "Components";
-import TextareaAutosize from "@mui/material/TextareaAutosize";
 import List from "@mui/material/List";
 import { UserListItem } from "./Components";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import { useGetUsers, useGetConversation } from "./hooks";
+import { useSelector } from "react-redux";
+import { AppStateType } from "reduxToolkit";
 
 const Wrapper = styled.div`
   display: flex;
@@ -21,10 +22,40 @@ const ChatWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const Chat = styled(TextareaAutosize)`
+const Chat = styled.div`
   margin-bottom: ${distances.px.l};
   padding: ${distances.px.l};
-  resize: none;
+  height: 330px;
+  border: 1px solid ${colors.black};
+  display: flex;
+  flex-direction: column-reverse;
+`;
+
+const Row = styled.div`
+  margin: 2px 0;
+`;
+
+const MyRow = styled(Row)`
+  text-align: right;
+`;
+
+const ContactRow = styled(Row)`
+  text-align: left;
+`;
+
+const Message = styled.div`
+  display: inline-block;
+  padding: ${distances.px.m};
+  border-radius: ${distances.px.l};
+`;
+
+const MyMessage = styled(Message)`
+  background-color: ${colors.blue500};
+  color: ${colors.white};
+`;
+
+const ContactMessage = styled(Message)`
+  background-color: ${colors.gray300};
 `;
 
 const UserWrapper = styled.div`
@@ -52,10 +83,14 @@ const SearchButton = styled(IconButton)`
 `;
 
 export const Home = () => {
+  const currentUser = useSelector(
+    (state: AppStateType) => state.user.currentUser
+  );
   const { users } = useGetUsers();
-  useGetConversation();
-  // const users = useSelector((state) => state);
+  const { conversation, setSelectedContactEmail, handleGetConversation } =
+    useGetConversation();
 
+  console.log("home", conversation);
   return (
     <>
       <MenuAppBar />
@@ -71,16 +106,37 @@ export const Home = () => {
                 <UserListItem
                   key={user.email}
                   name={`${user.firstName} ${user.lastName}`}
+                  handleSelectUser={() => {
+                    setSelectedContactEmail(user.email!);
+                    handleGetConversation(user.email!);
+                  }}
                 />
               ))}
             </UserList>
           </UserWrapper>
           <ChatWrapper>
-            <Chat
-              aria-label="minimum height"
-              minRows={21}
-              placeholder="Chat..."
-            />
+            <Chat>
+              <>
+                <MyRow>
+                  <MyMessage>User message</MyMessage>
+                </MyRow>
+                <ContactRow>
+                  <ContactMessage>Reply message</ContactMessage>
+                </ContactRow>
+                {conversation?.messages.map((message) =>
+                  message.name ===
+                  `${currentUser.firstName} ${currentUser.lastName}` ? (
+                    <MyRow key={message.text}>
+                      <MyMessage>{message.text}</MyMessage>
+                    </MyRow>
+                  ) : (
+                    <ContactRow key={message.text}>
+                      <ContactMessage>{message.text}</ContactMessage>
+                    </ContactRow>
+                  )
+                )}
+              </>
+            </Chat>
             <TextField fullWidth />
           </ChatWrapper>
         </Wrapper>

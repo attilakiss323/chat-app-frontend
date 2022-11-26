@@ -9,11 +9,26 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import Button from "@mui/material/Button";
 import { useAppBar } from "./useAppBar";
-import { colors } from "utils";
+import { colors, distances } from "utils";
+import Divider from "@mui/material/Divider";
+import styled from "styled-components";
+
+const StyledDivider = styled(Divider)`
+  && {
+    height: ${distances.px.l};
+    margin-left: ${distances.px.m};
+  }
+  background: white;
+`;
 
 export const MenuAppBar = () => {
-  const { handleSignout, handleMenuClick, handleMenuClose, anchorEl } =
-    useAppBar();
+  const {
+    handleSignout,
+    handleMenuClick,
+    handleMenuClose,
+    anchorEl,
+    currentUser,
+  } = useAppBar();
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -47,6 +62,10 @@ export const MenuAppBar = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Chat App
           </Typography>
+          <div>
+            {currentUser.firstName} {currentUser.lastName}
+          </div>
+          <StyledDivider orientation="vertical" />
           <Button color="inherit" onClick={handleSignout}>
             Sign out
           </Button>

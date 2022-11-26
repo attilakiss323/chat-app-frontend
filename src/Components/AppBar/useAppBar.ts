@@ -4,10 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { Routes } from "routes";
 import { useDispatch } from "react-redux";
 import { clearUsers, setError } from "reduxToolkit";
+import { useSelector } from "react-redux";
+import { AppStateType } from "reduxToolkit";
 
 export const useAppBar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const currentUser = useSelector(
+    (state: AppStateType) => state.user.currentUser
+  );
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const handleMenuClick = (event: MouseEvent<HTMLElement>) => {
@@ -37,5 +42,6 @@ export const useAppBar = () => {
     handleMenuClick,
     handleMenuClose,
     anchorEl,
+    currentUser,
   };
 };

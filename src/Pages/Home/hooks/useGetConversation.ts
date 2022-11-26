@@ -1,45 +1,55 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { api, post } from "utils";
 import { useDispatch } from "react-redux";
-import { setError, AppStateType } from "reduxToolkit";
+import {
+  setError,
+  AppStateType,
+  setConversation,
+  selectConversationByUserEmail,
+  selectUserByEmail,
+} from "reduxToolkit";
 import { useSelector } from "react-redux";
 
 export const useGetConversation = () => {
-  // const conversation = useSelector((state) => (state as AppStateType).conversation);
+  const [selectedContactEmail, setSelectedContactEmail] = useState("");
+  const conversation = useSelector((state: AppStateType) =>
+    selectConversationByUserEmail(state, selectedContactEmail)
+  );
+  const selectedUser = useSelector((state: AppStateType) =>
+    selectUserByEmail(state, selectedContactEmail)
+  );
 
-  console.log("does this render");
   const currentUser = useSelector(
     (state) => (state as AppStateType).user.currentUser
   );
   const dispatch = useDispatch();
 
-  const handleGetConversation = async () => {
+  const handleGetConversation = async (contact: string) => {
+    console.log("contact", contact);
     const body = {
       email: currentUser.email,
+      contact,
     };
 
-    console.log("email", body);
     const response = await post(api.conversation, body);
 
-    console.log("response", response);
-    const conversation = await response.json();
+    const data = await response.json();
 
-    console.log("conversation", conversation);
+    console.log("data", data);
+
     if (response.status !== 200 && response.status !== 201) {
-      dispatch(setError(conversation));
+      dispatch(setError(data.conversation));
       return;
     }
-    // dispatch(setConversation(conversation));
-  };
 
-  useEffect(() => {
-    console.log("does this happen", currentUser.email);
-    if (currentUser.email) {
-      handleGetConversation();
-    }
-  }, [currentUser.email]);
+    dispatch(setConversation(data.conversation));
+  };
 
   return {
     handleGetConversation,
+    setSelectedContactEmail,
+    selectedContactEmail,
+    conversation,
+    selectedUser,
   };
 };
