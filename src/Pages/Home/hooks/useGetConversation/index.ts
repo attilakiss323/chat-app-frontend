@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { api, post } from "utils";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   setError,
@@ -7,8 +6,10 @@ import {
   setConversation,
   selectConversationByUserEmail,
   selectUserByEmail,
+  ConversationType,
 } from "reduxToolkit";
 import { useSelector } from "react-redux";
+import { socket, SocketNames } from "sockets";
 
 export const useGetConversation = () => {
   const [selectedContactEmail, setSelectedContactEmail] = useState("");
@@ -24,29 +25,26 @@ export const useGetConversation = () => {
   );
   const dispatch = useDispatch();
 
-  const handleGetConversation = async (contact: string) => {
-    console.log("contact", contact);
-    const body = {
-      email: currentUser.email,
-      contact,
-    };
+  const handleSetConversation = (contact: string) => {
+    socket.emit(
+      SocketNames.conversation,
+      {
+        email: currentUser.email,
+        contact,
+      },
+      (response: { conversation?: ConversationType; error?: string }) => {
+        if (response.error) {
+          dispatch(setError(response.error));
+          return;
+        }
 
-    const response = await post(api.conversation, body);
-
-    const data = await response.json();
-
-    console.log("data", data);
-
-    if (response.status !== 200 && response.status !== 201) {
-      dispatch(setError(data.conversation));
-      return;
-    }
-
-    dispatch(setConversation(data.conversation));
+        dispatch(setConversation(response.conversation!));
+      }
+    );
   };
 
   return {
-    handleGetConversation,
+    handleSetConversation,
     setSelectedContactEmail,
     selectedContactEmail,
     conversation,

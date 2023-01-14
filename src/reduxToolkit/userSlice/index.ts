@@ -1,9 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 
 export interface CurrentuserType {
   firstName?: string;
   lastName?: string;
   email?: string;
+  isOnline: boolean;
 }
 
 export interface UserType {
@@ -17,6 +18,7 @@ const initialState: UserType = {
     firstName: undefined,
     lastName: undefined,
     email: undefined,
+    isOnline: false,
   },
 };
 
@@ -27,6 +29,21 @@ export const userSlice = createSlice({
     setCurrentUser: (state, data) => {
       state.currentUser = data.payload;
     },
+    setCurrentUserOnline: (state) => {
+      state.currentUser.isOnline = true;
+    },
+    setUserOnline: (state, data) => {
+      data.payload.onlineUsers.forEach((email: string) => {
+        const existingUserIndex = state.users.findIndex(
+          (user) => user.email === email
+        );
+
+        console.log("state.users", state.users, existingUserIndex, email);
+        if (existingUserIndex > -1) {
+          state.users[existingUserIndex].isOnline = true;
+        }
+      });
+    },
     setUsers: (state, data) => {
       state.users = data.payload.users;
       state.currentUser = data.payload.currentUser;
@@ -36,12 +53,19 @@ export const userSlice = createSlice({
         firstName: undefined,
         lastName: undefined,
         email: undefined,
+        isOnline: false,
       };
       state.users = [];
     },
   },
 });
 
-export const { setUsers, clearUsers, setCurrentUser } = userSlice.actions;
+export const {
+  setUsers,
+  clearUsers,
+  setCurrentUser,
+  setCurrentUserOnline,
+  setUserOnline,
+} = userSlice.actions;
 
 export default userSlice.reducer;

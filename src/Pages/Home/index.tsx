@@ -7,8 +7,7 @@ import { UserListItem } from "./Components";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import { useGetUsers, useGetConversation } from "./hooks";
-import { useSelector } from "react-redux";
-import { AppStateType } from "reduxToolkit";
+import { useUserOnline } from "hooks";
 
 const Wrapper = styled.div`
   display: flex;
@@ -83,14 +82,11 @@ const SearchButton = styled(IconButton)`
 `;
 
 export const Home = () => {
-  const currentUser = useSelector(
-    (state: AppStateType) => state.user.currentUser
-  );
-  const { users } = useGetUsers();
-  const { conversation, setSelectedContactEmail, handleGetConversation } =
+  useUserOnline();
+  const { users, currentUser } = useGetUsers();
+  const { conversation, setSelectedContactEmail, handleSetConversation } =
     useGetConversation();
 
-  console.log("home", conversation);
   return (
     <>
       <MenuAppBar />
@@ -106,9 +102,10 @@ export const Home = () => {
                 <UserListItem
                   key={user.email}
                   name={`${user.firstName} ${user.lastName}`}
+                  isOnline={user.isOnline}
                   handleSelectUser={() => {
                     setSelectedContactEmail(user.email!);
-                    handleGetConversation(user.email!);
+                    handleSetConversation(user.email!);
                   }}
                 />
               ))}

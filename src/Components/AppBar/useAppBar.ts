@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { clearUsers, setError } from "reduxToolkit";
 import { useSelector } from "react-redux";
 import { AppStateType } from "reduxToolkit";
+import { socket, SocketNames } from "sockets";
 
 export const useAppBar = () => {
   const navigate = useNavigate();
@@ -34,6 +35,7 @@ export const useAppBar = () => {
 
     dispatch(clearUsers());
     localStorage.setItem("token", "");
+    // socket.disconnect();
     navigate(Routes.welcome);
   };
 

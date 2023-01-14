@@ -6,6 +6,9 @@ import { useSelector } from "react-redux";
 import { AppStateType } from "reduxToolkit";
 
 export const useGetUsers = () => {
+  const currentUser = useSelector(
+    (state: AppStateType) => state.user.currentUser
+  );
   const users = useSelector((state) => (state as AppStateType).user.users);
   const dispatch = useDispatch();
 
@@ -28,6 +31,7 @@ export const useGetUsers = () => {
 
   return {
     handleGetUsers,
+    currentUser,
     users,
   };
 };

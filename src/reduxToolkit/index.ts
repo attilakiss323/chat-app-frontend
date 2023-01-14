@@ -1,5 +1,3 @@
-import finalPropsSelectorFactory from "react-redux/es/connect/selectorFactory";
-
 export * from "./store";
 export * from "./userSlice";
 export * from "./userSlice/selectors";
